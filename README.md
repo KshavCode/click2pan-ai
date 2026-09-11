@@ -1,39 +1,29 @@
 # Click2Pan 🎥🔍
 ### *Smart Screen Recorder with Automated Click-to-Zoom & Cinematic Panning*
 
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?style=flat&logo=windows&logoColor=white)](https://www.microsoft.com/windows)
-[![FFmpeg](https://img.shields.io/badge/FFmpeg-Hardware_Accelerated-007808?style=flat&logo=ffmpeg&logoColor=white)](https://ffmpeg.org/)
-[![OpenCV](https://img.shields.io/badge/OpenCV-Lanczos4_Filtering-5C3EE8?style=flat&logo=opencv&logoColor=white)](https://opencv.org/)
-[![CustomTkinter](https://img.shields.io/badge/GUI-CustomTkinter-blue)](https://github.com/TomSchimansky/CustomTkinter)
-
 ---
 
-## 🌟 Overview
+## Overview
 
-Creating video tutorials, software walk-throughs, and product demos traditionally requires hours of tedious post-production: manually setting keyframes, cropping, zooming into UI buttons, and panning across the screen.
+Creating video tutorials, software walk-throughs, and product demos traditionally requires hours of tedious post-production: manually setting keyframes, cropping, zooming into UI buttons, and panning across the screen. 
 
 **Click2Pan** automates your entire screen capture and post-production workflow:
-1. **Records your screen & audio** via FFmpeg with zero frame drops.
-2. **Tracks mouse interactions** with millisecond-accurate timeline synchronization.
-3. **Automatically detects and clusters click hotspots**, calculating optimal bounding boxes.
-4. **Renders smooth, cinematic pan-and-zoom sequences** with cubic easing and animated click ripple indicators.
+- **Records your screen & audio** via FFmpeg with zero frame drops.
+- **Tracks mouse interactions** with millisecond-accurate timeline synchronization.
+- **Automatically detects and clusters click hotspots**, calculating optimal bounding boxes.
+- **Renders smooth, cinematic pan-and-zoom sequences** with cubic easing and animated click ripple indicators.
 
 No video editing software required — just hit record, interact with your software, stop, and get a polished presentation video ready for export.
 
 ---
 
-## ✨ Features
+## Features
 
-- 🎯 **Intelligent Click-to-Zoom**: Automatically zooms into UI regions where you click and holds focus during interactions.
-- 🧠 **Spatial & Temporal Event Clustering**: Debounces rapid clicks within spatial proximity into continuous, stable zoom windows rather than erratic camera jumps.
-- 📐 **Edge-Clamped Framing**: Prevents out-of-bounds video clipping when clicking near screen corners and borders.
-- 🌊 **Cinematic Pan/Zoom Transitions**: Employs cubic ease-in-out timeline interpolation (`progress * progress * (3 - 2 * progress)`) for smooth camera moves.
-- 🔍 **Razor-Sharp Text Resampling**: Utilizes high-precision Lanczos-4 interpolation (`cv2.INTER_LANCZOS4`) to keep code and UI text clear and legible when enlarged.
-- 🟡 **Animated Click Ripple Indicators**: Visual expanding ripple animations highlight interactions (Yellow for Left Click, Red for Right Click).
-- ⏱️ **Zero-Drift Synchronization**: Thread-safe singleton session clock ensures raw video frames and mouse events match with millisecond precision.
-- 🎙️ **Microphone & DirectShow Integration**: Automatic audio input discovery for voiceover narration.
-- 🖥️ **Modern Dark-Mode Dashboard**: Sleek CustomTkinter interface with global hotkey support (`Ctrl+Shift+R` by default) and real-time rendering progress tracking.
+-  **Intelligent Click-to-Zoom**: Automatically zooms into UI regions where you click and holds focus during interactions.
+- **Cinematic Pan/Zoom Transitions**: Employs cubic ease-in-out timeline interpolation for smooth camera moves.
+- **Razor-Sharp Text Resampling**: Utilizes high-precision to keep UI text clear and legible when enlarged.
+- **Animated Click Ripple Indicators**: Visual expanding ripple animations highlight interactions (Yellow for Left Click, Red for Right Click).
+- **Microphone & DirectShow Integration**: Automatic audio input discovery for voiceover narration.
 
 ---
 
@@ -98,11 +88,6 @@ python -m venv venv
 ### 3. Install Dependencies
 
 ```bash
-pip install customtkinter moviepy opencv-python imageio-ffmpeg pynput numpy proglog
-```
-
-*(Alternatively, if updating `requirements.txt`):*
-```bash
 pip install -r requirements.txt
 ```
 
@@ -111,7 +96,7 @@ pip install -r requirements.txt
 ## 🎮 How to Use
 
 ### Step 1: Launch the Application
-Run the orchestrator script:
+Run the script:
 ```bash
 python main.py
 ```
@@ -134,36 +119,8 @@ In the dashboard:
 ---
 
 ## ⚙️ Configuration (`config.json`)
+All runtime options can be customized via config.json
 
-All runtime options can be customized via [config.json](file:///e:/Coding%20Tutorial/Projects/Click2Pan/config.json):
-
-```json
-{
-    "video_settings": {
-        "fps": 60,
-        "resolution": {
-            "width": 1366,
-            "height": 768
-        },
-        "zoom_factor": 1.5
-    },
-    "animation_settings": {
-        "zoom_duration_ms": 300,
-        "hold_duration_ms": 2000,
-        "debounce_threshold_ms": 1500
-    },
-    "paths": {
-        "workspace": "./workspace",
-        "raw_video": "raw_capture.mp4",
-        "events_log": "events.json",
-        "final_output": "final_edit.mp4"
-    },
-    "app_settings": {
-        "hotkey": "<ctrl>+<shift>+r",
-        "audio_device": ""
-    }
-}
-```
 
 ### Key Configuration Parameters
 
@@ -189,12 +146,12 @@ Click2Pan/
 ├── main.py                  # Application entry point and orchestrator
 ├── requirements.txt         # Project dependencies
 ├── src/
-│   ├── event_processor.py   # Spatial/temporal click clustering and bounding box calculations
-│   ├── gui.py               # CustomTkinter dashboard and settings controller
-│   ├── hook_listener.py     # Low-level mouse event listener and logger
-│   ├── recorder.py          # FFmpeg screen and audio capture wrapper
+│   ├── event_processor.py   # Handles click related events
+│   ├── gui.py               # Dashboard and settings controller
+│   ├── hook_listener.py     # Mouse event listener and logger
+│   ├── recorder.py          # Screen and audio capture wrapper
 │   ├── renderer.py          # MoviePy/OpenCV rendering engine with Lanczos scaling & ripple effects
-│   └── session_sync.py      # Thread-safe master clock for timeline synchronization
+│   └── session_sync.py      # Master clock for timeline synchronization
 └── workspace/               # Generated output artifacts (raw video, logs, final render)
     ├── events.json
     ├── raw_capture.mp4
@@ -219,8 +176,3 @@ Click2Pan/
 2. **Audio Setup**: If your microphone doesn't appear in the dropdown, verify that Windows microphone privacy settings allow desktop apps to access the microphone.
 3. **Pacing**: Click deliberately when navigating. The clustering engine will automatically group rapid double-clicks or nearby UI interactions into a single, cohesive camera motion.
 
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see the LICENSE file for details.
