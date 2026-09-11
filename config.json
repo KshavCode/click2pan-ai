@@ -1,0 +1,25 @@
+{
+    "video_settings": {
+        "fps": 60,
+        "resolution": {
+            "width": 1366,
+            "height": 768
+        },
+        "zoom_factor": 1.5
+    },
+    "animation_settings": {
+        "zoom_duration_ms": 300,
+        "hold_duration_ms": 2000,
+        "debounce_threshold_ms": 1500
+    },
+    "paths": {
+        "workspace": "./workspace",
+        "raw_video": "raw_capture.mp4",
+        "events_log": "events.json",
+        "final_output": "final_edit.mp4"
+    },
+    "app_settings": {
+        "hotkey": "<ctrl>+<shift>+r",
+        "audio_device": ""
+    }
+}
